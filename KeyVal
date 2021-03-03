@@ -1,0 +1,137 @@
+_________________________________________________________________________
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp4
+{
+    class KeyVal
+    {
+        public int key;
+        public int val;
+
+        public KeyVal(int a , int b )
+        {
+            key = a;
+            val = b;
+        }
+    }
+
+
+}
+
+_________________________________________________________________________
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp4
+{
+    class MyComp: IComparer<KeyVal>
+    {
+
+        public int Compare(KeyVal x , KeyVal y)
+        {
+            return x.val < y.val ? -1 : 1;
+        }
+    }
+}
+_________________________________________________________________________
+
+
+using System;
+
+
+namespace ConsoleApp4
+{
+    class Program
+    {   
+        delegate void ptr (int x );
+        delegate int tr(int x);
+        delegate int del(int x, int y);
+        static void Main(string[] args)
+        {
+            
+            var d = new KeyVal[5];
+            d[0] = new KeyVal(2, 3);
+
+            d[1] = new KeyVal(3, 6);
+
+            d[2] = new KeyVal(4, 9);
+
+            d[3] = new KeyVal(5, 4);
+
+            d[4] = new KeyVal(6, 1);
+
+            Array.Sort(d, 0, 5, new MyComp());
+
+            for (int x = 0; x != d.Length; x++)
+            {
+                Console.WriteLine(d[x].val);
+            }
+
+            tr square = x => x*x;
+            Console.WriteLine(square(5));
+
+            del myf = (a,b) => a+b;
+            Console.WriteLine(myf);
+
+            int v1 = myf(10,6);
+            del myf2 =(a,b) => a*b;
+            int v2 =myf2(5,10);
+            Console.WriteLine(v1+ " " +v2);
+
+
+            ptr p = (x) =>Console.WriteLine(x);
+            p.Invoke(123);
+
+            System.Action<int> obA = null;
+
+            
+            obA = x=>   
+            {
+                Console.WriteLine(x+ x);
+
+
+            };
+            obA(10);
+
+            System.Func<int,int,int> obF2 = null;
+            obF2 = (x,y) => 2 * x + 4 * y;
+            Console.WriteLine(obF2(10,20));
+            obF2 = (a,b) =>
+            {
+                if(a>b)
+                {
+                    return 1 ;
+
+
+                   
+                }
+
+                else
+                {
+                    return a+b;
+             }    
+                 
+            };
+            Console.WriteLine(obF2(101,0));
+            Console.WriteLine(obF2(10,20));
+
+
+
+        }
+       
+        
+            
+
+
+            
+          
+
+        
+    }
+}
+_________________________________________________________________________
